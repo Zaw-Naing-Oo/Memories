@@ -7,7 +7,7 @@ import postRoutes from './routes/posts.js'
 
 const app = express();
 
-app.use('/posts', postRoutes)
+app.use('/posts', postRoutes);
 
 // Returns middleware that only parses json and only looks at requests where the Content-Type header matches the type option. 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
