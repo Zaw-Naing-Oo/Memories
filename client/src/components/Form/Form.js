@@ -28,6 +28,7 @@ const Form = () => {
           fullWidth 
           value={postData.creator}
           onChange={ (e) => setPostData({ ...postData, creator: e.target.value})}
+          required
         />
         <TextField 
           name='title' 
@@ -36,6 +37,7 @@ const Form = () => {
           fullWidth 
           value={postData.title}
           onChange={ (e) => setPostData({ ...postData, title: e.target.value})}
+          required
         />
         <TextField 
           name='message' 
@@ -44,6 +46,7 @@ const Form = () => {
           fullWidth 
           value={postData.message}
           onChange={ (e) => setPostData({ ...postData, message: e.target.value})}
+          required
         />
         <TextField 
           name='tags' 
@@ -52,11 +55,13 @@ const Form = () => {
           fullWidth 
           value={postData.tags}
           onChange={ (e) => setPostData({ ...postData, tags: e.target.value})}
+          required
         />
         <div className={classes.fileInput}>
         <FileBase64
           multiple={ false }
           onDone={ (e) => setPostData({ ...postData, selectedFile: e.target.value}) }
+          value={ postData.selectedFile }
         />
         </div>
         <Button className={ classes.buttonSubmit } variant='contained' color='primary' size='large' type='submit' fullWidth>Submit</Button>
