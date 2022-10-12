@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles'
 
-const useStyle =  makeStyles(() => ({
-    appBar: {
+const useStyle =  makeStyles((theme) => ({
+       appBar: {
         borderRadius: 15,
         margin: '30px 0',
         display: 'flex',
@@ -15,6 +15,12 @@ const useStyle =  makeStyles(() => ({
       image: {
         marginLeft: '15px',
       },
+      container : {
+        [theme.breakpoints.down('sm')] : {
+          flexDirection: 'column-reverse'
+        }      
+      }
+     
 }));
 
 export default useStyle;

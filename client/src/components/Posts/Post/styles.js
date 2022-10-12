@@ -7,18 +7,12 @@ const useStyle =  makeStyles(() => ({
         backgroundColor: 'rgba(0, 0, 0, 0.5)',
         backgroundBlendMode: 'darken',
       },
-      border: {
-        border: 'solid',
-      },
-      fullHeightCard: {
-        height: '100%',
-      },
       card: {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
         borderRadius: '15px',
-        height: '100%',
+        // height: '100%',
         position: 'relative',
       },
       overlay: {

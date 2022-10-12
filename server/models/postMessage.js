@@ -7,7 +7,7 @@ const postSchema = new Schema({
     creator: String,
     tags: [String],
     selectedFile: String,
-    linkCount: {
+    likeCount: {
         type: Number,
         default: 0
     },
