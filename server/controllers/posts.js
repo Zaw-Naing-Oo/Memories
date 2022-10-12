@@ -32,7 +32,20 @@ export const updatePost = async (req, res) => {
         const updatedPost = await PostMessage.findByIdAndUpdate(_id, {...newPost, _id }, { new: true });
         res.json(updatedPost);
     } catch (error) {
-        res.status(409).json({message: error.message});
+        res.status(409).json({message: error});
     }
 
 };
+
+export const deletePost = async (req, res) => {
+    const { id } = req.params;
+    // console.log(typeof(id));
+    try {
+        if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send("No post is found with that id");
+        await PostMessage.findByIdAndRemove(id);
+        console.log('Delete');
+        res.json({ message: "Post successfully deleted"});
+    } catch (error) {
+        res.status(409).json({message: error});
+    }
+}

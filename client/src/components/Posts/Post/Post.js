@@ -3,11 +3,15 @@ import useStyle from './styles.js';
 import { Card, CardContent, CardActions, Typography, Button, CardMedia } from '@material-ui/core'
 import { Delete, MoreHoriz, ThumbUpAlt } from '@material-ui/icons'
 import moment from 'moment';
+import { useDispatch } from 'react-redux';
+import { deletePost } from '../../../actions/posts.js'
 
 
 const Post = ({post, currentId, setCurrentId}) => {
+  // console.log(typeof(post._id));
+  const dispatch = useDispatch();
   const classes = useStyle();
-  console.log(post);
+  // console.log(post);
   return (
     <Card className={ classes.card }>
       <CardMedia component="img" image={post.selectedFile} className={classes.media} title={post.title} />
@@ -19,7 +23,7 @@ const Post = ({post, currentId, setCurrentId}) => {
       </div>
       <div className={classes.overlay2}>
         <Button style={{color: 'white'}} size="small" onClick={ () => { setCurrentId(post._id)} }>
-          <MoreHoriz fontSize='default' />
+          <MoreHoriz fontSize='medium' />
         </Button>
       </div>
       <div className={ classes.details}>
@@ -35,7 +39,7 @@ const Post = ({post, currentId, setCurrentId}) => {
            Like
            { post.likeCount }
         </Button>
-        <Button size='small' color='primary' onClick={ () => {} }>
+        <Button size='small' color='primary' onClick={ () => { dispatch(deletePost(post._id))} }>
            <Delete fontSize='small' />
            Delete
         </Button>

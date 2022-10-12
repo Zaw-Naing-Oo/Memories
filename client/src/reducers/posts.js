@@ -8,10 +8,12 @@ const posts = (posts = [], action) => {
         case 'UPDATE' : 
             // loop over original array and check id with new data post and update it.
             return posts.map(post => post._id === action.payload._id ? action.payload : post);
+        case 'DELETE' : 
+            console.log(action.payload);
+            return posts.filter(post => post._id !== action.payload);
         default:
-            break;
+            return posts;
     }
-    return posts;
 }
 
 export default posts;
