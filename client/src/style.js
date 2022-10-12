@@ -11,9 +11,15 @@ const useStyle =  makeStyles((theme) => ({
       },
       heading: {
         color: 'rgba(0,183,255, 1)',
+        [theme.breakpoints.down('sm')]: {
+          fontSize: '2.75rem',
+        }
       },
       image: {
         marginLeft: '15px',
+        [theme.breakpoints.down('sm')]: {
+          height: '45px',
+        }
       },
       container : {
         [theme.breakpoints.down('sm')] : {

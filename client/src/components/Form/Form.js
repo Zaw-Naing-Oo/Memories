@@ -47,6 +47,7 @@ const Form = ({currentId, setCurrentId}) => {
           value={postData.creator}
           onChange={ (e) => setPostData({ ...postData, creator: e.target.value})}
           required
+          autoComplete='off'
         />
         <TextField 
           name='title' 
@@ -56,6 +57,8 @@ const Form = ({currentId, setCurrentId}) => {
           value={postData.title}
           onChange={ (e) => setPostData({ ...postData, title: e.target.value})}
           required
+          autoComplete='off'
+
         />
         <TextField 
           name='message' 
@@ -65,6 +68,7 @@ const Form = ({currentId, setCurrentId}) => {
           value={postData.message}
           onChange={ (e) => setPostData({ ...postData, message: e.target.value})}
           required
+          autoComplete='off'
         />
         <TextField 
           name='tags' 
@@ -74,6 +78,7 @@ const Form = ({currentId, setCurrentId}) => {
           value={postData.tags}
           onChange={ (e) => setPostData({ ...postData, tags: e.target.value.split(`,`)})}
           required
+          autoComplete='off'
         />
         <div className={classes.fileInput}>
           <FileBase type="file" multiple={false} onDone={({ base64 }) => setPostData({ ...postData, selectedFile: base64 })} />

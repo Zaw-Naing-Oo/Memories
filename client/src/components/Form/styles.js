@@ -8,9 +8,6 @@ const useStyle =  makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(2),
-    [theme.breakpoints.up('sm')] : {
-      marginTop: '20px',
-    },
   },
   form: {
     display: 'flex',
