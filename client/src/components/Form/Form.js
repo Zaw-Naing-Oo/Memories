@@ -1,21 +1,39 @@
-import React, { useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import useStyle from './styles';
 import { TextField, Typography, Button, Paper } from '@material-ui/core'
-import FileBase64 from 'react-file-base64';
-import { useDispatch } from 'react-redux'
-import { createPost } from '../../actions/posts';
+import FileBase from 'react-file-base64'
+import { useDispatch, useSelector } from 'react-redux'
+import { createPost, updatePost } from '../../actions/posts';
 
-const Form = () => {
+const Form = ({currentId, setCurrentId}) => {
+
+  // single post data coming from post updateBtn in Post component to fill original post data in form input.
+    const post = useSelector( (state) => currentId ? state.posts.find(p => p._id === currentId) : null );
+    // console.log(useSelector( state => state))
+
     const classes = useStyle();
     const dispatch = useDispatch();
     const [postData, setPostData] = useState({ creator: '', title: '', message: '', tags: '', selectedFile: '' });
 
     const handleSubmit = (e) => {
        e.preventDefault();
-       dispatch(createPost(postData));
+       if(!currentId){
+          dispatch(createPost(postData));
+       } else {
+          dispatch(updatePost(currentId,postData))
+       }
+       clear();
     }
 
-    const clear = () => {};
+    const clear = () => {
+      setCurrentId(null);
+      setPostData({ creator: '', title: '', message: '', tags: '', selectedFile: '' });
+    };
+
+    useEffect(() => {
+      if(post) setPostData(post);
+    }, [post]);
+    
 
   return (
     <Paper elevation={3}>
@@ -58,11 +76,7 @@ const Form = () => {
           required
         />
         <div className={classes.fileInput}>
-        <FileBase64
-          multiple={ false }
-          onDone={ (e) => setPostData({ ...postData, selectedFile: e.target.value}) }
-          value={ postData.selectedFile }
-        />
+          <FileBase type="file" multiple={false} onDone={({ base64 }) => setPostData({ ...postData, selectedFile: base64 })} />
         </div>
         <Button className={ classes.buttonSubmit } variant='contained' color='primary' size='large' type='submit' fullWidth>Submit</Button>
         <Button variant='contained' color='secondary' size='small' onClick={clear} fullWidth >Clear</Button>
