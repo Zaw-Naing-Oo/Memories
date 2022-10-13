@@ -11,7 +11,6 @@ const Post = ({post, currentId, setCurrentId}) => {
   // console.log(typeof(post._id));
   const dispatch = useDispatch();
   const classes = useStyle();
-  console.log(post);
   return (
     <Card className={ classes.card }>
       <CardMedia component="img" image={post.selectedFile} className={classes.media} title={post.title} />
