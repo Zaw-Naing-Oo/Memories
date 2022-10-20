@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import cors from 'cors';
 import bodyParser from "body-parser";
 import postRoutes from './routes/posts.js'
+import userRoutes from './routes/users.js'
 // import dotenv from 'dotenv'
 
 const app = express();
@@ -15,6 +16,7 @@ app.use(cors());
 // dotenv.config();
 
 app.use('/posts', postRoutes);
+app.use('/users', userRoutes);
 
 
 const CONNECTION_URL = "mongodb+srv://Memories:Memories123@cluster0.wdgg3c3.mongodb.net/?retryWrites=true&w=majority";

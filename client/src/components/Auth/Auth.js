@@ -4,17 +4,33 @@ import { LockOutlined } from '@material-ui/icons'
 import { GoogleLogin } from '@react-oauth/google'
 import { useDispatch } from 'react-redux'
 import  jwt_decode from 'jwt-decode'
+import { useNavigate } from 'react-router-dom'
 import useStyle from './style'
 import Input from './Input'
+import { signUp, singIn } from '../../actions/auth'
 
 const Auth = () => {
     const classes = useStyle();
     const [isSignUp, setIsSignUp] = useState(true);
     const [showPassword, setShowPassword] = useState(false);
+    const [formData, setFormData] = useState({ firstName: '', lastName: '', email: '', password: '', confirmPassword: '' })
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     
-    const handleChange = () => {};
-    const handleSubmit = () => {};
+    const handleChange = (e) => {
+      setFormData({ ...formData, [e.target.name] : e.target.value })
+    };
+    const handleSubmit = (e) => {
+      e.preventDefault();
+
+      if(isSignUp) {
+        dispatch(signUp(formData, navigate))
+      } else {
+        dispatch(singIn(formData, navigate));
+      }
+      // console.log(formData);
+
+    };
 
     const handleShowPassword = () => setShowPassword((prevPassword) => !prevPassword);
 
@@ -30,6 +46,7 @@ const Auth = () => {
         // console.log(decode);
         try {
           dispatch({ type: 'AUTH', data: {token, decode}});
+          navigate('/')
         } catch (error) {
           console.log(error);
         }
@@ -53,7 +70,7 @@ const Auth = () => {
                 { isSignUp && (
                     <>
                       <Input name="firstName" label="First Name" handleChange={handleChange} autoFocus half />
-                      <Input name="firstName" label="First Name" handleChange={handleChange} half />
+                      <Input name="lastName" label="Last Name" handleChange={handleChange} half />
                     </>
                 )}
                 <Input name="email" label="Email Address" handleChange={handleChange} type="email"  />
