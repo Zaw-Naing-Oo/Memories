@@ -4,11 +4,12 @@ const { Schema } = mongoose;
 const postSchema = new Schema({
     title: String,
     message: String,
+    name: String,
     creator: String,
-    tags: [String],
+    tags: [ String ],
     selectedFile: String,
     likes: {
-        type: [String],
+        type: [ String ],
         default: [],
     },
     createdAt: {

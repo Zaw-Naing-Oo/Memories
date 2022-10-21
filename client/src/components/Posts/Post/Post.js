@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { deletePost, likePost } from '../../../actions/posts.js'
 
 
-const Post = ({post, currentId, setCurrentId}) => {
+const Post = ({ post, currentId, setCurrentId}) => {
   // console.log(typeof(post._id));
   const dispatch = useDispatch();
   const classes = useStyle();
@@ -15,7 +15,7 @@ const Post = ({post, currentId, setCurrentId}) => {
     <Card className={ classes.card }>
       <CardMedia component="img" image={post.selectedFile} className={classes.media} title={post.title} />
       <div className={classes.overlay}>
-        <Typography variant='h6'>{ post.creator }</Typography>
+        <Typography variant='h6'>{ post.name }</Typography>
         <Typography variant='body2'>
            { moment(post.createdAt).fromNow() }
         </Typography>
@@ -40,7 +40,7 @@ const Post = ({post, currentId, setCurrentId}) => {
         </Button>
         <Button size='small' color='primary' onClick={ () => { dispatch(deletePost(post._id))} }>
            <Delete fontSize='small' />
-           Delete
+            Delete
         </Button>
       </CardActions>
     </Card>

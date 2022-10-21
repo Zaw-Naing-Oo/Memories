@@ -20,7 +20,8 @@ app.use('/users', userRoutes);
 
 
 const CONNECTION_URL = "mongodb+srv://Memories:Memories123@cluster0.wdgg3c3.mongodb.net/?retryWrites=true&w=majority";
-const PORT = process.env.PORT || 5000;
+// const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 
 
 mongoose.connect(CONNECTION_URL).then(
