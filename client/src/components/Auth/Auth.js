@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import useStyle from './style'
 import Input from './Input'
 import { signUp, singIn } from '../../actions/auth'
+import { AUTH } from '../../actionNames/actions'
 
 const Auth = () => {
     const classes = useStyle();
@@ -45,7 +46,7 @@ const Auth = () => {
         const decode = jwt_decode(token);
         // console.log(decode);
         try {
-          dispatch({ type: 'AUTH', data: {token, decode}});
+          dispatch({ type: AUTH, data: {token, decode}});
           navigate('/')
         } catch (error) {
           console.log(error);

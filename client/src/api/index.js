@@ -12,7 +12,7 @@ API.interceptors.request.use( (req) => {
 });
 
 export const fetchPosts = async () =>  await API.get('/posts');
-export const createPost = async(newPost) => await API.post('/posts/create', newPost);
+export const createPost = async (newPost) => await API.post('/posts/create', newPost);
 export const updatePost = async (id, updatedPost) => await API.patch(`/posts/${id}` , updatedPost);
 export const deletePost = async (id) => await API.delete(`/posts/${id}`);
 export const likePost = async (id) => await API.patch(`/posts/${id}/likePost`);

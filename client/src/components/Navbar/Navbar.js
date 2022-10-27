@@ -5,6 +5,8 @@ import memory from  '../../images/memory.avif'
 import { googleLogout } from '@react-oauth/google'
 import { useDispatch } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { LOGOUT } from '../../actionNames/actions'
+import decode from 'jwt-decode'
 
 import useStyle from './style.js'
 
@@ -18,14 +20,23 @@ const Navbar = () => {
 
   const logout = () => {
      googleLogout();
-     dispatch({ type: 'LOGOUT'});
+     dispatch({ type: LOGOUT});
      setUser(null);
      navigate('/');
   }
 
   useEffect( () => {
+    
+    const token = user?.token;
+    if(token) {
+      // console.log(token);
+      const decodeToken = decode(token);
+      // console.log(decodeToken);
+      // console.log(new Date().getTime())
+      if(decodeToken.exp * 1000 < new Date().getTime()) logout();
+    }
 
-    setUser(JSON.parse(localStorage.getItem('profile')))
+    setUser(JSON.parse(localStorage.getItem('profile')));
   }, [location])
 
   return (

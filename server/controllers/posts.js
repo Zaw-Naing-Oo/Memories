@@ -1,6 +1,7 @@
 
 import mongoose from "mongoose";
 import PostMessage from "../models/postMessage.js";
+import User from "../models/users.js";
 
 export const getPosts = async (req, res) => {
     try {
@@ -16,11 +17,11 @@ export const createPost = async (req, res) => {
     const post = req.body;
     // console.log(req.body);
     const newPost = new PostMessage({...post, creator: req.userId, createdAt: new Date().toISOString() });
-    console.log(newPost);
+    // console.log(newPost);
     try {
-        console.log('no')
-        const post = await newPost.save();
-        return res.status(201).json(post);
+        // console.log('no')
+        await newPost.save();
+        return res.status(201).json(newPost);
     } catch (error) {
         res.status(409).json({message: error.message});
     }
@@ -42,11 +43,14 @@ export const updatePost = async (req, res) => {
 
 export const deletePost = async (req, res) => {
     const { id } = req.params;
-    // console.log(typeof(id));
+    // console.log(id);
+    // const user = await User.findOne({_id});
+    // console.log(user);
+
     try {
         if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send("No post is found with that id");
         await PostMessage.findByIdAndRemove(id);
-        console.log('Delete');
+        // console.log('Delete');
         res.json({ message: "Post successfully deleted"});
     } catch (error) {
         res.status(409).json({message: error});
@@ -55,6 +59,7 @@ export const deletePost = async (req, res) => {
 
 export const likePost = async (req, res) => {
     const { id } = req.params;
+    // console.log(id);
     try {
         if(!req.userId) return res.json({ message: 'Unauthenticated' });
         if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send("No post is found with that id");
@@ -62,7 +67,7 @@ export const likePost = async (req, res) => {
 
         const index = post.likes.findIndex(id => id !== String(req.userId));
 
-        if( index !== -1) {
+        if( index === -1) {
             // like the post
             post.likes.push(req.userId);
         } else {
@@ -71,7 +76,7 @@ export const likePost = async (req, res) => {
         }
 
         const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true });
-        res.status(200).json(updatedPost);
+        return res.status(200).json(updatedPost);
     } catch (error) {
         console.log(error);
         res.status(409).json({ message: error });

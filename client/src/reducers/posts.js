@@ -9,7 +9,11 @@ const posts = (posts = [], action) => {
             return [...posts, action.payload];
         case UPDATE: 
             // loop over original array and check id with new data post and update it.
-            return posts.map(post => post._id === action.payload._id ? action.payload : post);  
+            return posts.map(post => {
+                // console.log(post);
+                // console.log(action.payload._id);
+                return post._id === action.payload._id ? action.payload : post
+            });  
         case DELETE: 
             // console.log(action.payload);
             return posts.filter(post => post._id !== action.payload);
