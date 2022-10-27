@@ -1,54 +1,67 @@
 import React, { useState, useEffect } from 'react'
 import useStyle from './styles';
 import { TextField, Typography, Button, Paper } from '@material-ui/core'
-import FileBase from 'react-file-base64'
 import { useDispatch, useSelector } from 'react-redux'
 import { createPost, updatePost } from '../../actions/posts';
+import { useLocation } from 'react-router-dom';
+import FileBase from 'react-file-base64'
 
 const Form = ({currentId, setCurrentId}) => {
 
+  const location = useLocation();
   // single post data coming from post updateBtn in Post component to fill original post data in form input.
     const post = useSelector( (state) => currentId ? state.posts.find(p => p._id === currentId) : null );
-    // console.log(useSelector( state => state))
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
 
     const classes = useStyle();
     const dispatch = useDispatch();
-    const [postData, setPostData] = useState({ creator: '', title: '', message: '', tags: '', selectedFile: '' });
+    const [postData, setPostData] = useState({ title: '', message: '', tags: '', selectedFile: '' });
 
     const handleSubmit = (e) => {
        e.preventDefault();
        if(!currentId){
-          dispatch(createPost(postData));
+          dispatch(createPost({...postData, name: user ? user?.result?.name : user?.decode?.name  }));
        } else {
-          dispatch(updatePost(currentId,postData))
+          dispatch(updatePost(currentId, {...postData, name: user ? user?.result?.name : user?.decode?.name  }))
        }
        clear();
     }
 
+     
+
     const clear = () => {
       setCurrentId(null);
-      setPostData({ creator: '', title: '', message: '', tags: '', selectedFile: '' });
+      setPostData({ title: '', message: '', tags: '', selectedFile: '' });
     };
 
     useEffect(() => {
       if(post) setPostData(post);
     }, [post]);
+
+
+    useEffect(() => {
+      setUser(JSON.parse(localStorage.getItem('profile')));
+    }, [location]);
+
+    if( !user ) {
+      return (
+        <Paper className={classes.paper}>
+          <Typography variant='h6' align='center'>Please sign in to create your own memory</Typography>
+        </Paper>
+      )
+    }
     
 
   return (
     <Paper className={classes.paper}>
+
+     { !user ? (
+      <Paper className={classes.paper}>
+       <Typography variant='h6' align='center'>Please sign in to create your own memory</Typography>
+      </Paper>
+      ) : (
       <form className={`${classes.root} ${classes.form}`} autoComplete="off" noValidate onSubmit={handleSubmit}>
         <Typography variant='h6'> { currentId ? `Editing ${post.title}` : `Creating A Memory`}</Typography>
-        <TextField 
-          name='creator' 
-          variant='outlined' 
-          label='Creator' 
-          fullWidth 
-          value={postData.creator}
-          onChange={ (e) => setPostData({ ...postData, creator: e.target.value})}
-          required
-          autoComplete='off'
-        />
         <TextField 
           name='title' 
           variant='outlined' 
@@ -81,12 +94,22 @@ const Form = ({currentId, setCurrentId}) => {
           autoComplete='off'
         />
         <div className={classes.fileInput}>
-          <FileBase type="file" multiple={false} onDone={({ base64 }) => setPostData({ ...postData, selectedFile: base64 })} />
+          <FileBase
+            type="file"
+            multiple={false}  
+            onDone={({ base64 }) =>
+              setPostData({ ...postData ,selectedFile: base64 })
+            }
+        />
+
         </div>
         <Button className={ classes.buttonSubmit } variant='contained' color='primary' size='large' type='submit' fullWidth>Submit</Button>
         <Button variant='contained' color='secondary' size='small' onClick={clear} fullWidth >Clear</Button>
       </form>
-    </Paper>
+      )
+    }
+    
+ </Paper>
 
 )}
 
