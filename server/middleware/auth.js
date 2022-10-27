@@ -10,13 +10,9 @@ const auth = async (req, res, next) => {
 
     if( isCustomeAuth && token) {
         const decodeData = jwt.verify(token, 'test');
-        // console.log(decodeData);
         req.userId = decodeData?.id;
-        // console.log(req.userId);
     } else {
-        // console.log(token);
         const decodeData = jwt.verify(token, 'test');
-        // console.log(decodeData);
         req.userId = decodeData?.sub;
     }
     next();

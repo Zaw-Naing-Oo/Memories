@@ -29,8 +29,6 @@ const Auth = () => {
       } else {
         dispatch(singIn(formData, navigate));
       }
-      // console.log(formData);
-
     };
 
     const handleShowPassword = () => setShowPassword((prevPassword) => !prevPassword);
@@ -44,7 +42,6 @@ const Auth = () => {
         // console.log(credentialResponse);
         const token = credentialResponse?.credential;
         const decode = jwt_decode(token);
-        // console.log(decode);
         try {
           dispatch({ type: AUTH, data: {token, decode}});
           navigate('/')

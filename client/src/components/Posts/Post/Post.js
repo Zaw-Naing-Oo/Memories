@@ -6,14 +6,12 @@ import {CardMedia} from '@material-ui/core';
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
 import { deletePost, likePost } from '../../../actions/posts.js'
-import { json, useLocation } from 'react-router-dom';
+import {useLocation } from 'react-router-dom';
 
 
 const Post = ({ post, setCurrentId}) => {
-  // console.log(post);
   const dispatch = useDispatch();
   const classes = useStyle();
-  // console.log(user);
   const location = useLocation();
   const user = JSON.parse(localStorage.getItem('profile'));
 

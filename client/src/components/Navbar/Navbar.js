@@ -16,7 +16,6 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  // console.log(user);
 
   const logout = () => {
      googleLogout();
@@ -29,10 +28,7 @@ const Navbar = () => {
     
     const token = user?.token;
     if(token) {
-      // console.log(token);
       const decodeToken = decode(token);
-      // console.log(decodeToken);
-      // console.log(new Date().getTime())
       if(decodeToken.exp * 1000 < new Date().getTime()) logout();
     }
 

@@ -12,14 +12,10 @@ const Form = ({currentId, setCurrentId}) => {
   // single post data coming from post updateBtn in Post component to fill original post data in form input.
     const post = useSelector( (state) => currentId ? state.posts.find(p => p._id === currentId) : null );
     const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
-    // console.log(user);
 
     const classes = useStyle();
     const dispatch = useDispatch();
     const [postData, setPostData] = useState({ title: '', message: '', tags: '', selectedFile: '' });
-    // get name from localstorage. not from the form
-    // const user = JSON.parse(localStorage.getItem('profile'));
-    // console.log(user);
 
     const handleSubmit = (e) => {
        e.preventDefault();
@@ -46,16 +42,6 @@ const Form = ({currentId, setCurrentId}) => {
     useEffect(() => {
       setUser(JSON.parse(localStorage.getItem('profile')));
     }, [location]);
-
-    // useEffect(() => {
-    //  if( !user ) {
-    //   return (
-    //     <Paper className={classes.paper}>
-    //       <Typography variant='h6' align='center'>Please sign in to create your own memory</Typography>
-    //     </Paper>
-    //   )
-    // }
-    // }, [user]);
 
     if( !user ) {
       return (
